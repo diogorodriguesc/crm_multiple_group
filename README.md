@@ -6,6 +6,7 @@
 
 Building images:
 ```bash
+cd docker
 docker-compose -f docker-compose.yaml build
 ```
 
@@ -14,6 +15,16 @@ Starting docker containers:
 ```bash
 cd docker
 docker-compose -f docker-compose.yaml up
+```
+
+Execute startup for the application:
+```bash
+docker exec -it $(docker ps --filter "ancestor=docker-php" -q) bin/run_startup.sh
+```
+
+Execute tests:
+```bash
+docker exec -it $(docker ps --filter "ancestor=docker-php" -q) vendor/bin/phpunit
 ```
 
 Run bash in mysql container:
