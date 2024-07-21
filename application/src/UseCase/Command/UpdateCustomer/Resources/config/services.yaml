@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\UseCase\Command\UpdateCustomer\:
+    resource: '../../'
+
+  App\UseCase\Command\UpdateCustomer\CommandHandler:
+    tags:
+      - { name: tactician.handler, command: App\UseCase\Command\UpdateCustomer\Command }

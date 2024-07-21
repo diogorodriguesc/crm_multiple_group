@@ -1,0 +1,45 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+# CREATE
+api_post_create_customer:
+    path: /api/customers
+    controller: App\Controller\CreateCustomerController::__invoke__
+    methods: POST
+
+# READ
+api_get_customer_by_uuid:
+    path: /api/customers/{id}
+    controller: App\Controller\GetCustomerByIdController::__invoke__
+    methods: GET
+
+# UPDATE
+api_update_customer:
+    path: /api/customers/{id}
+    controller: App\Controller\UpdateCustomerByIdController::__invoke__
+    methods: PATCH
+
+#DELETE
+api_delete_customer:
+    path: /api/customers/{id}
+    controller: App\Controller\DeleteCustomerController::__invoke__
+    methods: DELETE
+
+
+api_deposit_funds:
+    path: /api/accounts/{customerId}/deposit
+    controller: App\Controller\AccountsController::depositFunds
+    methods: POST
+
+api_withdraw_funds:
+    path: /api/accounts/{customerId}/withdraw
+    controller: App\Controller\AccountsController::withdrawFunds
+    methods: POST
+
+api_transfer_funds:
+    path: /api/accounts/transfer
+    controller: App\Controller\AccountsController::transferFunds
+    methods: POST

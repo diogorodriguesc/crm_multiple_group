@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\UseCase\Command\DepositFunds\:
+    resource: '../../'
+
+  App\UseCase\Command\DepositFunds\CommandHandler:
+    tags:
+      - { name: tactician.handler, command: App\UseCase\Command\DepositFunds\Command }

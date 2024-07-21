@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\UseCase\Command\DeleteCustomer\:
+    resource: '../../'
+
+  App\UseCase\Command\DeleteCustomer\CommandHandler:
+    tags:
+      - { name: tactician.handler, command: App\UseCase\Command\DeleteCustomer\Command }

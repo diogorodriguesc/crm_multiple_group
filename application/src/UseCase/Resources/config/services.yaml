@@ -1,0 +1,8 @@
+imports:
+    - { resource: '../../Command/CreateCustomer/Resources/config/services.yaml' }
+    - { resource: '../../Command/DeleteCustomer/Resources/config/services.yaml' }
+    - { resource: '../../Command/DepositFunds/Resources/config/services.yaml' }
+    - { resource: '../../Command/TransferFunds/Resources/config/services.yaml' }
+    - { resource: '../../Command/UpdateCustomer/Resources/config/services.yaml' }
+    - { resource: '../../Command/WithdrawFunds/Resources/config/services.yaml' }
+    - { resource: '../../Query/GetCustomerById/Resources/config/services.yaml' }
