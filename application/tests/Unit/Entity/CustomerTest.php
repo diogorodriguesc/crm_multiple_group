@@ -5,18 +5,14 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Customer;
 use App\Entity\Exception\NoRequiredBalanceException;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class CustomerTest extends TestCase
 {
     public function testCustomer(): void
     {
-        $customer = new Customer();
-
-        $customer
-            ->setName('Diogo')
-            ->setSurname('Correia')
-            ->setBalance('10.03');
+        $customer = $this->getCustomer();
 
         self::assertEquals('Diogo', $customer->name());
         self::assertEquals('Correia', $customer->surname());
@@ -33,11 +29,36 @@ class CustomerTest extends TestCase
     {
         self::expectException(NoRequiredBalanceException::class);
 
-        $customer = (new Customer())
+        $customer = $this->getCustomer();
+
+        $customer->withdrawFunds(10.05);
+    }
+
+    public function testCustomerWithdrawFundsWithNegativeValueThrowsException(): void
+    {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Amount of funds to withdraw must be positive');
+
+        $customer = $this->getCustomer();
+
+        $customer->withdrawFunds(-1.00);
+    }
+
+    public function testCustomerDepositFundsWithNegativeValueThrowsException(): void
+    {
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Amount of funds to deposit must be positive');
+
+        $customer = $this->getCustomer();
+
+        $customer->depositFunds(-1.00);
+    }
+
+    private function getCustomer(): Customer
+    {
+        return (new Customer())
             ->setName('Diogo')
             ->setSurname('Correia')
             ->setBalance('10.03');
-
-        $customer->withdrawFunds(10.05);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use App\UseCase\Query\GetCustomerById\Query;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final readonly class GetCustomerByIdController extends AbstractController
 {

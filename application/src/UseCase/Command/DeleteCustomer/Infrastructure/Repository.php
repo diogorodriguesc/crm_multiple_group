@@ -29,13 +29,17 @@ final readonly class Repository implements RepositoryInterface
             throw new CouldNotDeleteCustomerRemainingBalanceException();
         }
 
+        $this->entityManager->beginTransaction();
+
         try {
             $this->entityManager->persist($customer->cancelCustomer());
             $this->entityManager->persist(
                 Transaction::createDeletionTransaction($customer)
             );
             $this->entityManager->flush();
+            $this->entityManager->commit();
         } catch (Throwable) {
+            $this->entityManager->rollback();
             return false;
         }
 

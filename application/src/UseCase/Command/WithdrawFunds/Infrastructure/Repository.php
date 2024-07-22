@@ -8,6 +8,7 @@ use App\Entity\Transaction;
 use App\UseCase\Command\WithdrawFunds\Exception\CustomerNotFoundException;
 use App\UseCase\Command\WithdrawFunds\RepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 final readonly class Repository implements RepositoryInterface
 {
@@ -23,13 +24,20 @@ final readonly class Repository implements RepositoryInterface
             throw new CustomerNotFoundException();
         }
 
+        $this->entityManager->beginTransaction();
+
         $customer->withdrawFunds($amount);
 
-        $this->entityManager->persist($customer);
-        $this->entityManager->persist(
-            Transaction::createWithdrawTransaction($customer, $amount)
-        );
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->persist($customer);
+            $this->entityManager->persist(
+                Transaction::createWithdrawTransaction($customer, $amount)
+            );
+            $this->entityManager->flush();
+            $this->entityManager->commit();
+        } catch (Throwable) {
+            $this->entityManager->rollback();
+        }
 
         return $customer;
     }

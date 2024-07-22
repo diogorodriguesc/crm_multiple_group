@@ -9,8 +9,8 @@ use App\UseCase\Command\CreateCustomer\Command;
 use App\UseCase\Command\CreateCustomer\Exception\CouldNotCreateCustomerException;
 use App\UseCase\Command\CreateCustomer\RepositoryInterface;
 use DateTime;
-use Doctrine\DBAL\Exception\ServerException;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 final readonly class Repository implements RepositoryInterface
 {
@@ -32,14 +32,14 @@ final readonly class Repository implements RepositoryInterface
             ->setUpdatedAt($createdDateTime)
             ->setBalance('0.00');
 
+        $this->entityManager->beginTransaction();
         try {
             $this->entityManager->persist($customer);
-
             $this->entityManager->persist(Transaction::createAccountTransaction($customer));
-
             $this->entityManager->flush();
-        } catch (ServerException $e) {
-            dump($e->getMessage());
+            $this->entityManager->commit();
+        } catch (Throwable) {
+            $this->entityManager->rollback();
             throw new CouldNotCreateCustomerException();
         }
 

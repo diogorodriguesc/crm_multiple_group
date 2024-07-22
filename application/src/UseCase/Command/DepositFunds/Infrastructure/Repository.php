@@ -9,6 +9,7 @@ use App\UseCase\Command\DepositFunds\Exception\CustomerNotFoundException;
 use App\UseCase\Command\DepositFunds\RepositoryInterface;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 final readonly class Repository implements RepositoryInterface
 {
@@ -28,10 +29,17 @@ final readonly class Repository implements RepositoryInterface
             ->depositFunds($amount)
             ->setUpdatedAt(new DateTime());
 
-        $this->entityManager->persist($customer);
-        $this->entityManager->persist(Transaction::createDepositTransaction($customer, $amount));
+        $this->entityManager->beginTransaction();
 
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->persist($customer);
+            $this->entityManager->persist(Transaction::createDepositTransaction($customer, $amount));
+
+            $this->entityManager->flush();
+            $this->entityManager->commit();
+        } catch (Throwable) {
+            $this->entityManager->rollback();
+        }
 
         return $customer;
     }

@@ -6,6 +6,7 @@ namespace App\Entity;
 use App\Entity\Exception\NoRequiredBalanceException;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -93,9 +94,13 @@ class Customer
 
     public function depositFunds(float $amount): self
     {
-        $balance = (float)$this->balance;
+        if ($amount < 0) {
+            throw new InvalidArgumentException('Amount of funds to deposit must be positive');
+        }
 
-        $this->balance = (string)($balance + $amount);
+        $balance = (float) $this->balance;
+
+        $this->balance = (string) ($balance + $amount);
 
         return $this;
     }
@@ -113,13 +118,17 @@ class Customer
 
     public function withdrawFunds(float $amount): self
     {
-        $balance = (float)$this->balance;
+        if ($amount < 0) {
+            throw new InvalidArgumentException('Amount of funds to withdraw must be positive');
+        }
+
+        $balance = (float) $this->balance;
 
         if (($balance - $amount) < 0) {
             throw new NoRequiredBalanceException("No required balance to finish operation.");
         }
 
-        $this->balance = (string)($balance - $amount);
+        $this->balance = (string) ($balance - $amount);
 
         return $this;
     }

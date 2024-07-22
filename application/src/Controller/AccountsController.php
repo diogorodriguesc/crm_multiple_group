@@ -8,8 +8,6 @@ use App\UseCase\Command\TransferFunds\Command as TransferFundsCommand;
 use App\UseCase\Command\TransferFunds\Exception\CustomerNotFoundException;
 use App\UseCase\Command\TransferFunds\Exception\TransactionNotSucceedException;
 use App\UseCase\Command\WithdrawFunds\Command as WithdrawFundsCommand;
-use InvalidArgumentException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
