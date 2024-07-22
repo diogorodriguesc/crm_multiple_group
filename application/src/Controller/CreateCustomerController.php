@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final readonly class CreateCustomerController extends AbstractController
 {
-    public function __invoke__(Request $request, ValidatorInterface $validator): Response
+    public function __invoke(Request $request, ValidatorInterface $validator): Response
     {
         try {
             return $this->respond(

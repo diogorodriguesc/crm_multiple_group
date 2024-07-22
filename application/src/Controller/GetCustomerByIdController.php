@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class GetCustomerByIdController extends AbstractController
 {
-    public function __invoke__(int $id): Response
+    public function __invoke(int $id): Response
     {
         $customer = $this->commandBus->handle(new Query($id));
 

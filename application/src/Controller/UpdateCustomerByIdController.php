@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UpdateCustomerByIdController extends AbstractController
 {
-    public function __invoke__(int $id, Request $request): Response
+    public function __invoke(int $id, Request $request): Response
     {
         return $this->respond(
             $this->commandBus->handle(Command::buildFromRequest($id, $request)),

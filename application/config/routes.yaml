@@ -7,25 +7,25 @@ controllers:
 # CREATE
 api_post_create_customer:
     path: /api/customers
-    controller: App\Controller\CreateCustomerController::__invoke__
+    controller: App\Controller\CreateCustomerController
     methods: POST
 
 # READ
 api_get_customer_by_uuid:
     path: /api/customers/{id}
-    controller: App\Controller\GetCustomerByIdController::__invoke__
+    controller: App\Controller\GetCustomerByIdController
     methods: GET
 
 # UPDATE
 api_update_customer:
     path: /api/customers/{id}
-    controller: App\Controller\UpdateCustomerByIdController::__invoke__
+    controller: App\Controller\UpdateCustomerByIdController
     methods: PATCH
 
 #DELETE
 api_delete_customer:
     path: /api/customers/{id}
-    controller: App\Controller\DeleteCustomerController::__invoke__
+    controller: App\Controller\DeleteCustomerController
     methods: DELETE
 
 

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteCustomerController extends AbstractController
 {
-    public function __invoke__(int $id): Response
+    public function __invoke(int $id): Response
     {
         try {
             $this->commandBus->handle(new Command($id));
