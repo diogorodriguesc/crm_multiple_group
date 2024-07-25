@@ -17,3 +17,5 @@ bin/console doctrine:database:create --if-not-exists --env test
 echo "Installing migrations..."
 bin/console doctrine:migrations:migrate -n
 bin/console doctrine:migrations:migrate -n --env test
+
+echo "Run startup script finished."

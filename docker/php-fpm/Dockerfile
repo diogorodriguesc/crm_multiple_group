@@ -21,5 +21,4 @@ RUN "date"
 
 WORKDIR /var/www/application
 
-# RUN sh /var/www/application/bin/run_startup.sh
-# CMD ["bin/run_startup.sh"]
+CMD ["/bin/bash", "-c", "/var/www/application/bin/run_startup.sh && tail -f /dev/null"]
